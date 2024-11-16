@@ -1,8 +1,7 @@
 const roomId = window.location.pathname.split('/')[1];
 
-
 function displayRoom(data) {
-    const name = sessionStorage.getItem('name');
+    const name = localStorage.getItem('name');
     const results = document.getElementById('results');
     const votingButtons = document.getElementById('voting-buttons');
     const endVotingButton = document.getElementById('end-voting');
@@ -15,6 +14,9 @@ function displayRoom(data) {
     console.log(name);
     if (name) {
         document.getElementById('user-card').innerHTML = `<div id="user-avatar">${name.slice(0, 1)}</div><div id="user-name">${name}</div>`
+        changeDisplayNamePopupVisibility(false);
+    } else {
+        changeDisplayNamePopupVisibility(true);
     }
 
     participantsList.innerHTML = '';
@@ -105,6 +107,15 @@ function calcAverage(data) {
     return result.toFixed(2);
 }
 
+function changeDisplayNamePopupVisibility(show) {
+    let elem = document.getElementById('display-name-popup');
+    if (show && elem.classList.contains('hidden')) {
+        elem.classList.remove('hidden');
+    } else if (!show && !elem.classList.contains('hidden')) {
+        elem.classList.add('hidden');
+    }
+}
+
 function updateRoomStatus() {
     fetch(`/room/${roomId}`)
         .then(response => response.json())
@@ -120,8 +131,25 @@ function startRoomUpdate() {
     }, 2000);
 }
 
-updateRoomStatus();
-startRoomUpdate();
+function roomRequest(endpoint, participantName, callback) {
+    fetch(`/room/${roomId}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({name: participantName})
+    }).then(response => {
+        if (!response.ok) {
+            console.log(`Ошибка: ${response.status} ${response.statusText}`);
+        }
+        return response.json();
+    }).then(data => {
+        callback(data)
+    }).catch(error => {
+        console.error('Произошла ошибка:', error);
+    });
+}
+
 
 document.getElementById('join-button').addEventListener('click', function () {
     const input = document.getElementById('display-name-input-id');
@@ -132,17 +160,10 @@ document.getElementById('join-button').addEventListener('click', function () {
         return;
     }
     const name = input.value;
-    fetch(`/room/${roomId}/join`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({name: name})
-    }).then(response => response.json()).then(data => {
-        sessionStorage.setItem('name', name);
-        document.getElementById('display-name-popup').classList.add('hidden');
+    roomRequest("join", name, data => {
+        localStorage.setItem('name', name);
         displayRoom(data);
-    })
+    });
 });
 
 document.getElementById('display-name-input-id').addEventListener('keypress', function (event) {
@@ -155,7 +176,7 @@ document.getElementById('display-name-input-id').addEventListener('keypress', fu
     }
 });
 
-document.getElementById('display-name-input-id').addEventListener('input', function() {
+document.getElementById('display-name-input-id').addEventListener('input', function () {
     const input = document.getElementById('display-name-input-id');
     const errorMessage = document.getElementById('error-message');
 
@@ -193,11 +214,22 @@ document.querySelectorAll('.vote-button').forEach(button => {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: new URLSearchParams({name: sessionStorage.getItem('name'), value: value})
+            body: new URLSearchParams({name: localStorage.getItem('name'), value: value})
         })
             .then(response => response.json())
             .then(data => {
                 displayRoom(data);
             });
     });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const name = localStorage.getItem("name");
+    if (name) {
+        roomRequest(name, _ => {
+            localStorage.setItem('name', name);
+        });
+    }
+    updateRoomStatus();
+    startRoomUpdate();
 });

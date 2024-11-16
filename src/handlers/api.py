@@ -18,7 +18,21 @@ def join_room(room_id):
     room = rooms.get(room_id)
     if room:
         name = request.form["name"]
-        rooms[room_id]["participants"][name] = -1
+        if name in room["participants"]:
+            return jsonify({"error": "Name already taken"}), 400
+        room["participants"][name] = -1
+        return jsonify(room)
+    return jsonify({"error": "Room not found"}), 404
+
+
+@bp.route("/room/<room_id>/leave", methods=["POST"])
+def leave_room(room_id):
+    room = rooms.get(room_id)
+    if room:
+        name = request.form["name"]
+        if name not in room["participants"]:
+            return jsonify({"error": "No participant in the room"}), 400
+        del room["participants"][name]
         return jsonify(room)
     return jsonify({"error": "Room not found"}), 404
 
