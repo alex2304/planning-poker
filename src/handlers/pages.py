@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, url_for
-from utils.storage import rooms
+from storage.storage import rooms
 
 bp = Blueprint("pages", __name__)
 

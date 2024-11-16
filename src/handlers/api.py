@@ -1,7 +1,7 @@
 import uuid
 
 from flask import Blueprint, jsonify, request
-from utils.storage import rooms
+from storage.storage import rooms
 
 bp = Blueprint("api", __name__)
 
