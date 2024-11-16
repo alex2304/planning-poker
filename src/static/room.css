@@ -51,15 +51,23 @@ h1 {
     margin-bottom: 20px;
 }
 
-#display-name-input {
+.display-name-input {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin-bottom: 20px;
     color: #333;
     background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+.error-message {
+    color: red;
 }
 
 .join-button {
@@ -73,6 +81,7 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    margin-top: 20px;
 }
 
 .join-button:hover {

@@ -12,6 +12,7 @@ function displayRoom(data) {
 
     document.getElementById('participants-count').innerText = Object.keys(data.participants).length;
 
+    console.log(name);
     if (name) {
         document.getElementById('user-card').innerHTML = `<div id="user-avatar">${name.slice(0, 1)}</div><div id="user-name">${name}</div>`
     }
@@ -73,6 +74,7 @@ function displayRoom(data) {
     }
 }
 
+
 function calcVotesCount(data) {
     let result = {};
     for (let value of Object.values(data.participants)) {
@@ -122,7 +124,14 @@ updateRoomStatus();
 startRoomUpdate();
 
 document.getElementById('join-button').addEventListener('click', function () {
-    const name = document.getElementById('display-name-input').value;
+    const input = document.getElementById('display-name-input-id');
+    const errorMessage = document.getElementById('error-message');
+    if (input.value.trim() === '') {
+        input.classList.add('error');
+        errorMessage.classList.remove('hidden');
+        return;
+    }
+    const name = input.value;
     fetch(`/room/${roomId}/join`, {
         method: 'POST',
         headers: {
@@ -136,13 +145,23 @@ document.getElementById('join-button').addEventListener('click', function () {
     })
 });
 
-document.getElementById('display-name-input').addEventListener('keypress', function (event) {
+document.getElementById('display-name-input-id').addEventListener('keypress', function (event) {
     // If the user presses the "Enter" key on the keyboard
     if (event.key === "Enter") {
         // Cancel the default action, if needed
         event.preventDefault();
         // Trigger the button element with a click
         document.getElementById("join-button").click();
+    }
+});
+
+document.getElementById('display-name-input-id').addEventListener('input', function() {
+    const input = document.getElementById('display-name-input-id');
+    const errorMessage = document.getElementById('error-message');
+
+    if (input.value.trim() !== '') {
+        input.classList.remove('error');
+        errorMessage.classList.add('hidden');
     }
 });
 
