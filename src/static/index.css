@@ -45,7 +45,7 @@ body {
     background-color: #E5EEFF;
 }
 
-#create-room {
+#join-room {
     background-color: #5A7FFD;
     color: #fff;
     border: none;
@@ -55,7 +55,7 @@ body {
     cursor: pointer;
 }
 
-#create-room:hover {
+#join-room:hover {
     background-color: #a5c8ef;
 }
 
@@ -63,6 +63,6 @@ body {
     cursor: pointer;
 }
 
-#create-room {
+#join-room {
     margin-top: 20px;
 }

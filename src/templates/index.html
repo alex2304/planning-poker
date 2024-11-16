@@ -11,12 +11,12 @@
 {% include 'includes/header.html' %}
 
 <div class="container">
-    <p class="info-text">You can join the room with this URL</p>
+    <p class="info-text">Open this URL to enter the voting room:</p>
     <div class="link-container">
         <label for="room-link"></label>
         <input type="text" id="room-link" readonly>
     </div>
-    <button id="create-room" class="create-room-button">Create room</button>
+    <button id="join-room" class="join-room-button">Open room URL</button>
 </div>
 
 <script src="{{ url_for('static', filename='index.js') }}"></script>

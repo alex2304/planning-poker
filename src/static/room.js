@@ -1,12 +1,6 @@
 const roomId = window.location.pathname.split('/')[1];
 
 
-if (!sessionStorage.getItem('name')) {
-    fetch(`/room/${roomId}/join`, {method: 'POST'}).then(response => response.json()).then(data => {
-        sessionStorage.setItem('name', data.name);
-    })
-}
-
 function displayRoom(data) {
     const name = sessionStorage.getItem('name');
     const results = document.getElementById('results');
@@ -18,7 +12,9 @@ function displayRoom(data) {
 
     document.getElementById('participants-count').innerText = Object.keys(data.participants).length;
 
-    document.getElementById('user-card').innerHTML = `<div id="user-avatar">${name.slice(0, 1)}</div><div id="user-name">${name}</div>`
+    if (name) {
+        document.getElementById('user-card').innerHTML = `<div id="user-avatar">${name.slice(0, 1)}</div><div id="user-name">${name}</div>`
+    }
 
     participantsList.innerHTML = '';
     for (const [participantName, value] of Object.entries(data.participants)) {
@@ -45,7 +41,7 @@ function displayRoom(data) {
     } else if (data.status === 'voting') {
         document.querySelectorAll('.vote-button').forEach(button => {
             const value = button.getAttribute('data-value');
-            if (data.participants[name] === value) {
+            if (name in data.participants && data.participants[name] === value) {
                 button.classList.add('selected');
             } else {
                 button.classList.remove('selected');
@@ -142,12 +138,12 @@ document.getElementById('join-button').addEventListener('click', function () {
 
 document.getElementById('display-name-input').addEventListener('keypress', function (event) {
     // If the user presses the "Enter" key on the keyboard
-  if (event.key === "Enter") {
-      // Cancel the default action, if needed
-      event.preventDefault();
-      // Trigger the button element with a click
-      document.getElementById("join-button").click();
-  }
+    if (event.key === "Enter") {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("join-button").click();
+    }
 });
 
 document.getElementById('start-voting').addEventListener('click', function () {
