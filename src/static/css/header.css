@@ -1,0 +1,99 @@
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px;
+    padding-left: 25px;
+}
+
+.logo {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    font-weight: bold;
+    color: var(--text-color-dark);
+    transform: translate(-20px, 0);
+    left: 20px;
+    top: -1px;
+}
+
+.logo span {
+    position: absolute;
+    color: white;
+    font-size: var(--font-size-medium);
+    font-weight: bold;
+    font-family: var(--font-family);
+    text-align: center;
+    top: 62%;
+    left: 29%;
+    transform: translate(0, -64%);
+    letter-spacing: 1px;
+    z-index: 1000;
+}
+
+.logo::before, .logo::after {
+    content: "";
+    position: absolute;
+    left: 50px;
+    top: 0;
+    width: 25px;
+    height: 40px;
+    background-color: var(--primary-color);
+    border-radius: 0 0 50px 50px;
+    transform: translate(-32px, 8px) rotate(-45deg);
+}
+
+.logo::after {
+    left: 0;
+    transform: translate(7px, 8px) rotate(45deg);
+}
+
+.header-text {
+    padding-left: 10px;
+    font-size: var(--font-size-xlarge);
+    font-weight: bold;
+    width: 300px;
+    height: auto;
+}
+
+.user-card-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 8px;
+    font-size: var(--font-size-medium);
+    color: var(--text-color-dark);
+    padding-top: 20px;
+    padding-right: 300px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: var(--background-light);
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: var(--font-size-medium);
+    font-weight: bold;
+}
+
+.user-name {
+    font-size: var(--font-size-medium);
+    font-weight: bold;
+    color: var(--text-color-dark);
+    display: flex;
+}

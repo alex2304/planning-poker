@@ -9,10 +9,8 @@ function displayRoom(data) {
     const participantsList = document.getElementById('participants-list');
     const averageValue = document.getElementById('average-value');
 
-    document.getElementById('participants-count').innerText = Object.keys(data.participants).length;
-
     if (name) {
-        document.getElementById('user-card').innerHTML = `<div id="user-avatar">${name.slice(0, 1)}</div><div id="user-name">${name}</div>`
+        document.getElementById('user-card').innerHTML = `<div id="user-avatar" class="user-avatar">${name.slice(0, 1)}</div><div id="user-name" class="user-name">${name}</div>`
         changeDisplayNamePopupVisibility(false);
     } else {
         changeDisplayNamePopupVisibility(true);

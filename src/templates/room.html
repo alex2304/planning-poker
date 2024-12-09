@@ -1,56 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room {{ room_id }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='room.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
-</head>
-<body>
-{% include 'includes/header.html' %}
+{% extends "base_layout.html" %}
 
-<div class="modal-overlay hidden" id="display-name-popup">
-    <div class="modal-content">
-        <h2>Choose your display name</h2>
-        <input type="text" placeholder="Your display name" class="display-name-input" id="display-name-input-id">
-        <div class="error-message hidden" id="error-message">Please enter a display name.</div>
-        <button class="join-button" id="join-button">Join the room</button>
-    </div>
-</div>
-<div class="user-card-container">
-    <div id="user-card">
-    </div>
-</div>
-<div id="participants">
-    <h2>Participants (<span id="participants-count">0</span>):</h2>
-    <div id="participants-list">
-    </div>
-</div>
-<div id="voting-interface">
-    <button id="start-voting">Start new voting</button>
-    <div id="voting-buttons" class="hidden">
-        <button class="vote-button" data-value="1">1</button>
-        <button class="vote-button" data-value="2">2</button>
-        <button class="vote-button" data-value="3">3</button>
-        <button class="vote-button" data-value="5">5</button>
-        <button class="vote-button" data-value="8">8</button>
-        <button class="vote-button" data-value="13">13</button>
-        <button class="vote-button" data-value="21">21</button>
-        <button class="vote-button" data-value="34">34</button>
-    </div>
-    <button id="end-voting" class="hidden">Finish voting</button>
-    <div id="results" class="hidden">
-        <h2>Vote Results</h2>
-        <div id="average">
-            <span id="average-label">Average:</span>
-            <span id="average-value">0</span>
-        </div>
-        <div id="votes-list">
+{% block title %}Planning Poker | Voting{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/room.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="modal-overlay hidden" id="display-name-popup">
+        <div class="modal-content">
+            <h2>Choose your display name</h2>
+            <input type="text" placeholder="Your display name" class="display-name-input" id="display-name-input-id">
+            <div class="error-message hidden" id="error-message">Please enter a display name.</div>
+            <button class="join-button" id="join-button">Join the room</button>
         </div>
     </div>
-</div>
+    <div class="voting-control-container">
+        <div class="voting-control-buttons">
+            <button id="start-voting" class="start-new-voting-button">Start new voting</button>
+            <button id="end-voting" class="end-voting-button hidden">Reveal cards</button>
+        </div>
+    </div>
+    <div class="participants-container">
+        <div id="participants-list" class="participants-list">
+        </div>
+    </div>
+    <div class="voting-interface-container">
+        <div id="voting-buttons" class="voting-interface hidden">
+            <span class="choose-card-label">Choose your card 👇</span>
+            <div class="voting-buttons">
+                <button class="vote-button" data-value="0">0</button>
+                <button class="vote-button" data-value="1">1</button>
+                <button class="vote-button" data-value="2">2</button>
+                <button class="vote-button" data-value="3">3</button>
+                <button class="vote-button" data-value="5">5</button>
+                <button class="vote-button" data-value="8">8</button>
+                <button class="vote-button" data-value="13">13</button>
+                <button class="vote-button" data-value="21">21</button>
+                <button class="vote-button" data-value="34">34</button>
+                <button class="vote-button" data-value="55">55</button>
+                <button class="vote-button" data-value="89">89</button>
+            </div>
+        </div>
+        <div id="results" class="results hidden">
+            <h2>Vote Results</h2>
+            <div id="average" class="average-block">
+                <span id="average-label" class="average-label">Average:</span>
+                <span id="average-value" class="average-value">0</span>
+            </div>
+            <div id="votes-list" class="votes-list">
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
-<script src="{{ url_for('static', filename='room.js') }}"></script>
-</body>
-</html>
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/room.js') }}"></script>
+{% endblock %}
