@@ -11,7 +11,6 @@ function displayRoom(data) {
 
     document.getElementById('participants-count').innerText = Object.keys(data.participants).length;
 
-    console.log(name);
     if (name) {
         document.getElementById('user-card').innerHTML = `<div id="user-avatar">${name.slice(0, 1)}</div><div id="user-name">${name}</div>`
         changeDisplayNamePopupVisibility(false);
@@ -144,7 +143,9 @@ function roomRequest(endpoint, participantName, callback) {
         }
         return response.json();
     }).then(data => {
-        callback(data)
+        if (callback != null) {
+            callback(data)
+        }
     }).catch(error => {
         console.error('Произошла ошибка:', error);
     });
@@ -226,10 +227,65 @@ document.querySelectorAll('.vote-button').forEach(button => {
 document.addEventListener("DOMContentLoaded", function () {
     const name = localStorage.getItem("name");
     if (name) {
-        roomRequest(name, _ => {
-            localStorage.setItem('name', name);
-        });
+        roomRequest("join", name, null);
     }
     updateRoomStatus();
     startRoomUpdate();
+});
+
+
+function uniqueTabId() {
+    return 'tab-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
+}
+
+if (!sessionStorage.getItem('tabId')) {
+    sessionStorage.setItem('tabId', uniqueTabId());
+}
+
+let openedTabs = {};
+
+const tabsChannel = new BroadcastChannel(roomId);
+
+tabsChannel.onmessage = (event) => {
+    const tabId = sessionStorage.getItem('tabId');
+
+    if (event.data && typeof event.data === 'object') {
+        console.log(`Tab ${tabId}: ${JSON.stringify(event.data)}`);
+
+        switch (event.data.eventType) {
+            case 'new_tab':
+                tabsChannel.postMessage({eventType: "old_tab_exists", tabId});
+                openedTabs[event.data.tabId] = true;
+                break;
+
+            case 'old_tab_exists':
+                openedTabs[event.data.tabId] = true;
+                break;
+
+            case 'close_tab':
+                openedTabs[event.data.tabId] = false;
+                break;
+
+            default:
+                console.warn(`Unknown event type: ${event.data.eventType}`);
+                break;
+        }
+    } else {
+        console.error("Invalid event data received:", event.data);
+    }
+};
+
+window.addEventListener('load', () => {
+    const tabId = sessionStorage.getItem('tabId');
+    tabsChannel.postMessage({eventType: "new_tab", tabId});
+});
+
+window.addEventListener('beforeunload', () => {
+    const hasOpenTabs = Object.values(openedTabs).some(isOpen => isOpen);
+    if (hasOpenTabs) {
+        tabsChannel.postMessage({eventType: "close_tab", tabId: sessionStorage.getItem('tabId')});
+    } else {
+        const name = localStorage.getItem("name");
+        roomRequest("leave", name, null);
+    }
 });
