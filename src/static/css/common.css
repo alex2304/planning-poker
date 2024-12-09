@@ -1,0 +1,57 @@
+:root {
+    --black-button: #000;
+    --black-button-light: #555;
+    --text-color-white: #fff;
+    --primary-color: #5A7FFD;
+    --primary-color-light: #7fb0e8;
+    --secondary-color: #4A90E2;
+    --background-light: #E5EEFF;
+    --background-light-alt: #f9f9f9;
+    --text-color-dark: #333;
+    --text-color-muted: #6C757D;
+    --error-color: red;
+    --font-family: Arial, sans-serif;
+    --font-size-small: 14px;
+    --font-size-medium: 16px;
+    --font-size-large: 20px;
+    --font-size-xlarge: 24px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-light-alt);
+    color: var(--text-color-dark);
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-top: 20px;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: var(--font-size-medium);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--primary-color-light);
+}
+
+.hidden {
+    display: none !important;
+}

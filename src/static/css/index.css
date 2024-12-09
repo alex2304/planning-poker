@@ -1,0 +1,49 @@
+
+.join-container {
+    text-align: center;
+    padding: 200px 0 0 0;
+}
+
+.info-text {
+    font-size: var(--font-size-medium);
+    color: var(--text-color-muted);
+    margin-bottom: 10px;
+}
+
+.link-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.room-link-input {
+    width: 300px;
+    padding: 10px;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    font-size: var(--font-size-medium);
+    text-align: center;
+    color: var(--text-color-dark);
+    background-color: var(--background-light);
+}
+
+.room-link-input:hover {
+    cursor: pointer;
+}
+
+.join-room-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: var(--font-size-medium);
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.join-room-button:hover {
+    background-color: var(--primary-color-light);
+}
