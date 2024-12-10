@@ -24,8 +24,10 @@ function displayRoom(data) {
         participantCard.classList.add('participant-card');
         if (data.status === 'results') {
             participantCard.classList.add('participant-card-result');
-            participantCard.innerText = value >= 0 ? String(value) : 'pass';
-        } else if (value >= 0) {
+            console.log(value);
+            // -1 means "not chosen" or "skipped", -2 means "passed" intentionally (please refactor this first!!!)
+            participantCard.innerText = value >= 0 ? String(value): (value === -1 ? '-': '?');
+        } else if (value >= 0 || value !== -1) {
             participantCard.classList.add('participant-card-activated');
         }
         participantDiv.appendChild(participantCard);
@@ -92,7 +94,7 @@ function calcAverage(data) {
 
     for (let [_, value] of Object.entries(data.participants)) {
         value = parseInt(value);
-        if (value > 0) {
+        if (value >= 0) {
             result += value;
             count += 1
         }
