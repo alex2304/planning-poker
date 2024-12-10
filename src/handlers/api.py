@@ -49,6 +49,8 @@ def get_room(room_id):
 def start_voting(room_id):
     room = rooms.get(room_id)
     if room:
+        if room["status"] == 'voting':
+            return jsonify({"error": "The voting has been already started"}), 400
         for name in room["participants"]:
             room["participants"][name] = -1
         room["status"] = "voting"

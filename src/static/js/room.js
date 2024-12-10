@@ -73,7 +73,6 @@ function displayRoom(data) {
     }
 }
 
-
 function calcVotesCount(data) {
     let result = {};
     for (let value of Object.values(data.participants)) {
@@ -149,6 +148,15 @@ function roomRequest(endpoint, participantName, callback) {
     });
 }
 
+function startVotingRequest() {
+    fetch(`/room/${roomId}/start_voting`, {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            displayRoom(data)
+        });
+}
 
 document.getElementById('join-button').addEventListener('click', function () {
     const input = document.getElementById('display-name-input-id');
@@ -185,15 +193,7 @@ document.getElementById('display-name-input-id').addEventListener('input', funct
     }
 });
 
-document.getElementById('start-voting').addEventListener('click', function () {
-    fetch(`/room/${roomId}/start_voting`, {
-        method: 'POST'
-    })
-        .then(response => response.json())
-        .then(data => {
-            displayRoom(data)
-        });
-});
+document.getElementById('start-voting').addEventListener('click', startVotingRequest);
 
 document.getElementById('end-voting').addEventListener('click', function () {
     fetch(`/room/${roomId}/end_voting`, {
@@ -226,6 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const name = localStorage.getItem("name");
     if (name) {
         roomRequest("join", name, null);
+        startVotingRequest();
     }
     updateRoomStatus();
     startRoomUpdate();
