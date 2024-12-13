@@ -20,7 +20,7 @@ check-not-running:
 	fi
 
 start: check-image-built check-not-running
-	docker run -d --name=$(CONTAINER_NAME) -p $(PORT):$(PORT) $(IMAGE_NAME) -b 0.0.0.0:$(PORT) -w 1 "planning_poker:create_app()"
+	docker run -d --name=$(CONTAINER_NAME) -p $(PORT):$(PORT) $(IMAGE_NAME) -b 0.0.0.0:$(PORT) -w 1 "run:create_app()"
 
 stop:
 	docker stop $(CONTAINER_NAME) && docker rm $(CONTAINER_NAME)

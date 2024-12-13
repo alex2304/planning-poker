@@ -35,7 +35,3 @@ def test_capacity_exceeded(capped_map):
     assert capped_map.get("b") == 2
     assert capped_map.get("c") == 3
     assert capped_map.get("d") == 4
-
-
-if __name__ == "__main__":
-    pytest.main()

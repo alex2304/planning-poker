@@ -24,7 +24,6 @@ function displayRoom(data) {
         participantCard.classList.add('participant-card');
         if (data.status === 'results') {
             participantCard.classList.add('participant-card-result');
-            console.log(value);
             // -1 means "not chosen" or "skipped", -2 means "passed" intentionally (please refactor this first!!!)
             participantCard.innerText = value >= 0 ? String(value): (value === -1 ? '-': '?');
         } else if (value >= 0 || value !== -1) {
@@ -138,7 +137,7 @@ function roomRequest(endpoint, participantName, callback) {
         body: new URLSearchParams({name: participantName})
     }).then(response => {
         if (!response.ok) {
-            console.log(`Ошибка: ${response.status} ${response.statusText}`);
+            console.log(`Error fetching room: ${response.status} ${response.statusText}`);
         }
         return response.json();
     }).then(data => {
@@ -146,7 +145,7 @@ function roomRequest(endpoint, participantName, callback) {
             callback(data)
         }
     }).catch(error => {
-        console.error('Произошла ошибка:', error);
+        console.error('Unhandled error:', error);
     });
 }
 
@@ -176,11 +175,8 @@ document.getElementById('join-button').addEventListener('click', function () {
 });
 
 document.getElementById('display-name-input-id').addEventListener('keypress', function (event) {
-    // If the user presses the "Enter" key on the keyboard
     if (event.key === "Enter") {
-        // Cancel the default action, if needed
         event.preventDefault();
-        // Trigger the button element with a click
         document.getElementById("join-button").click();
     }
 });
