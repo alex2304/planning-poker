@@ -11,10 +11,11 @@ _storage_lock = threading.Lock()
 storage: Optional[BaseStorage] = None
 
 
-def init_storage(_storage: Optional[BaseStorage] = None) -> None:
+def init_storage(_storage: Optional[BaseStorage] = None) -> Optional[BaseStorage]:
     global storage
     if storage is None:
         storage = _storage
+    return storage
 
 
 @with_lock(_storage_lock)
