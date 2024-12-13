@@ -20,9 +20,16 @@ To stop the application and free port 8000, run:
 make stop
 ```
 
+To run unit tests in Docker container:
+```shell
+make test-unit
+```
+
+To use it together with your team, deploy the service as a Docker image to any hosting. 
+
 ## Motivation
 
-Finding free solutions for Planning Poker can be challenging, as most available options are paid.  
+Finding convenient solutions for Planning Poker can be challenging, as most useful tools are paid.  
 
 This project aims to fill that gap by providing a free, open-source alternative with a minimal yet essential set of features.  
 
@@ -57,6 +64,7 @@ Product features I consider useful to implement for better user experience:
 1. Add the ability to specify a list of cards to be estimated.
 2. Improve the UX for the voting process: add animation for the “Reveal” button, include a countdown timer before revealing results, prevent revealing cards until a vote is cast, and arrange the cards aesthetically around the table.
 3. Add authorization and user profiles with options to log in and log out.
+4. Multiple deck types: Fibonacci, modified Fibonacci, T-Shirt sizes, powers of 2, etc.
 
 ## License
 
