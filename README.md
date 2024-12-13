@@ -35,7 +35,7 @@ Please start by reviewing the current limitations and development recommendation
 ### Existing Limitations
 
 - No JavaScript framework is currently used for the frontend.
-- Simple in-memory storage is used, which only supports a single gunicorn worker (-w 1 option).
+- Very simple but inefficient synchronous web-server is used.  
 - Lack of robust data type validation on the backend.
 
 ### Recommendations
@@ -43,9 +43,9 @@ Please start by reviewing the current limitations and development recommendation
 If you want to create more complex product from this project, I recommend you to implement the following improvements before adding new features.
 
 Backend Enhancements:
-- Implement data validation using a framework such as **Marshmallow** or an equivalent library.
+- Implement data validation using a framework such as **pydantic** or **Marshmallow**.
+- Consider switching to an asynchronous, modern and more powerful web-framework like **FastAPI** or at least switching to `ASGI` with **uvicorn**. 
 - Transition to a relational DBMS like **PostgreSQL** to ensure scalability and data integrity. Connect to a DBMS using an ORM library like **SQLAlchemy**.
-- Increase the number of workers when deploying with Gunicorn for improved performance in production.
 
 Frontend Improvements:
 - Migrate the frontend to a modern Single Page Application (SPA) framework such as **React**, **Vue.js**, or **Svelte** for better maintainability.
