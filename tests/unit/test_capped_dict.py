@@ -3,7 +3,7 @@ import pytest
 from utils.capped_dict import CappedDict
 
 
-@pytest.fixture(name='capped_map')
+@pytest.fixture(name="capped_map")
 def capped_map_with_3_capacity():
     return CappedDict(3)
 

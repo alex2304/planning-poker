@@ -1,6 +1,6 @@
-from typing import Callable, TypeVar, ParamSpec
-import threading
 import functools
+import threading
+from typing import Callable, ParamSpec, TypeVar
 
 P = ParamSpec("P")
 R = TypeVar("R")

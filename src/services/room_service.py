@@ -2,20 +2,22 @@ import threading
 import uuid
 from typing import Optional
 
-from exceptions import HttpNotFoundError, HttpBadRequestError
+from exceptions import HttpBadRequestError, HttpNotFoundError
 from storage.base import BaseStorage
-from utils.util import with_lock
 
-_storage_lock = threading.Lock()
+from utils.util import with_lock
 
 storage: Optional[BaseStorage] = None
 
 
-def init_storage(_storage: Optional[BaseStorage] = None) -> Optional[BaseStorage]:
+def set_storage_global(_storage: Optional[BaseStorage] = None) -> Optional[BaseStorage]:
     global storage
     if storage is None:
         storage = _storage
     return storage
+
+
+_storage_lock = threading.Lock()
 
 
 @with_lock(_storage_lock)
@@ -60,7 +62,7 @@ def start_voting(room_id: str) -> dict:
     room = storage.get_room(room_id)
     if room is None:
         raise HttpNotFoundError(f"Room {room_id} not found")
-    if room["status"] == 'voting':
+    if room["status"] == "voting":
         raise HttpBadRequestError("Voting already started")
     for name in room["participants"]:
         room["participants"][name] = -1

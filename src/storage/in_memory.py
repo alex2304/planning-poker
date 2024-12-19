@@ -1,10 +1,11 @@
 from models.enums import RoomStatus
+
 from utils.capped_dict import CappedDict
+
 from .base import BaseStorage
 
 
 class InMemoryStorage(BaseStorage):
-
     def __init__(self, *, rooms_limit: int) -> None:
         self._rooms = CappedDict(capacity=rooms_limit)
 

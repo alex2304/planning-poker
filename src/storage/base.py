@@ -1,11 +1,10 @@
 from abc import ABC, abstractmethod
-from typing import Optional, Dict
+from typing import Dict, Optional
 
 from models.enums import RoomStatus
 
 
 class BaseStorage(ABC):
-
     @abstractmethod
     def create_room(self, room_id: str) -> str:
         pass

@@ -1,7 +1,7 @@
+from exceptions import HttpBadRequestError, HttpInternalServerError, HttpNotFoundError
 from flask import jsonify
 
 from . import bp
-from exceptions import HttpNotFoundError, HttpBadRequestError, HttpInternalServerError
 
 
 def default_error_handler(message, code):
