@@ -12,9 +12,16 @@ RUN pip install gunicorn==$GUNICORN_VERSION && \
 COPY src/ ./
 
 FROM base AS app
+
 ENTRYPOINT ["gunicorn"]
 
 FROM base AS test
-RUN pip install pytest
+
+ENV PYTEST_VERSION=8.3.3
+
+RUN pip install pytest==$PYTEST_VERSION && \
+    rm -rf /root/.cache/pip
+
 COPY ./tests ./tests
+
 CMD ["pytest", "tests/"]
