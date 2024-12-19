@@ -1,7 +1,8 @@
+from exceptions import HttpNotFoundError
 from flask import redirect, render_template, url_for
 
-from exceptions import HttpNotFoundError
 from services import room_service
+
 from . import bp
 
 

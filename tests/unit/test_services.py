@@ -1,17 +1,16 @@
 from unittest.mock import MagicMock
 
 import pytest
-
-from exceptions import HttpNotFoundError, HttpBadRequestError
-from services import room_service
-from services.room_service import init_storage
+from exceptions import HttpBadRequestError, HttpNotFoundError
 from storage.base import BaseStorage
+
+from services import room_service
 
 
 @pytest.fixture(scope="module")
 def storage_mock():
     mock = MagicMock(spec=BaseStorage)
-    init_storage(mock)
+    room_service.set_storage_global(mock)
     return mock
 
 
